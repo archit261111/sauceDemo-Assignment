@@ -47,16 +47,22 @@ export class  Login  {
     //Action methods
 
 
-    enterUserName(){
+    async enterUserName(){
 
-        this.usernameField.fill()
+       await this.usernameField.fill()
+
+    }
+
+    async enterPassword(){
+
+       await this.passwordField.fill()
 
     }
 
 
-     clickLoginButton(){
+     async clickLoginButton(){
 
-        this.loginButton.click()
+       await this.loginButton.click()
 
     }
 

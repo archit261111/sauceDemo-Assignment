@@ -50,22 +50,22 @@ return this.postalCodeField;
 
     //Actions method
 
-    enterFirstname(){
+    async enterFirstname(){
 
-        this.firstNameField.fill();
-
-    }
-
-    enterLastname(){
-
-        this.lastNameField.fill();
+       await this.firstNameField.fill();
 
     }
 
-    enterPostalCode(){
+    async enterLastname(){
 
-        this.postalCodeField.fill();
-        
+       await this.lastNameField.fill();
+
+    }
+
+    async enterPostalCode(){
+
+       await this.postalCodeField.fill();
+
     }
 
 

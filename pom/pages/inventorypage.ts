@@ -42,18 +42,18 @@ class Inventory {
 
     //Actions method
 
-    clicksortButton(){
-        this.sortButton.click();
+    async clicksortButton(){
+        await this.sortButton.click();
 
     }
 
-    clickaddToCart(){
-        this.addtocartButton.click();
+    async clickaddToCart(){
+      await  this.addtocartButton.click();
 
     }
 
-    clickcartContainor(){
-        this.cartContainor.click();
+    async clickcartContainor(){
+        await this.cartContainor.click();
 
     }
 
