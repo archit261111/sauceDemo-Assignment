@@ -1,6 +1,6 @@
 import {test, Page, Locator} from "@playwright/test"
 
-class cart{
+export class Cart{
 
 
     //Properties
@@ -27,7 +27,7 @@ class cart{
 
     //Actions method
 
-    async clickcheckoutButton(){
+    async clickCheckoutButton(){
 
        await this.checkoutButton.click();
 
