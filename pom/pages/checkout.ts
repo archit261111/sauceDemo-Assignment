@@ -50,7 +50,7 @@ return this.postalCodeField;
 
     //Actions method
 
-    async enterFirstname(firstname: string){
+    async enterFirstname(firstname:string){
 
        await this.firstNameField.fill(firstname);
 
@@ -67,5 +67,6 @@ return this.postalCodeField;
        await this.postalCodeField.fill(postalcode);
 
     }
+    
 
 }
