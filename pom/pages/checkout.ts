@@ -1,6 +1,6 @@
 import {test, Page, Locator} from "@playwright/test"
 
-class checkOut{
+export class checkOut{
 
     //Properties
     firstNameField:Locator;
@@ -50,24 +50,22 @@ return this.postalCodeField;
 
     //Actions method
 
-    async enterFirstname(){
+    async enterFirstname(firstname: string){
 
-       await this.firstNameField.fill();
-
-    }
-
-    async enterLastname(){
-
-       await this.lastNameField.fill();
+       await this.firstNameField.fill(firstname);
 
     }
 
-    async enterPostalCode(){
+    async enterLastname(lastname: string){
 
-       await this.postalCodeField.fill();
+       await this.lastNameField.fill(lastname);
 
     }
 
+    async enterPostalCode(postalcode:string){
 
+       await this.postalCodeField.fill(postalcode);
+
+    }
 
 }
