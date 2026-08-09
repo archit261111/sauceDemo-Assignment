@@ -3,11 +3,11 @@ import { test, Page, Locator, expect} from "@playwright/test";
 export class Inventory {
 
     //Properties
-    sortButton:Locator
-    addToCartButtonCheapest:Locator
-    addToCartButtonExpensive:Locator
-    cartCount:Locator
-    cartContainor:Locator
+    sortButton:Locator;
+    addToCartButtonCheapest:Locator;
+    addToCartButtonExpensive:Locator;
+    cartCount:Locator;
+    cartContainor:Locator;
 
 
 
@@ -15,7 +15,7 @@ export class Inventory {
     // Constructors
     constructor(page:Page){
 
-        this.sortButton = page.locator('[data-test="product-sort-container"]');
+        this.sortButton = page.locator(".product_sort_container");
         this.addToCartButtonCheapest = page.locator("#add-to-cart-sauce-labs-onesie");
         this.addToCartButtonExpensive = page.locator("#add-to-cart-sauce-labs-fleece-jacket")
         this.cartCount = page.locator('[data-test="shopping-cart-badge"]');
@@ -40,48 +40,37 @@ export class Inventory {
 
     getAddToCartButtonExpensive(){
         return this.addToCartButtonExpensive;
-
     }
 
     getCartCount(){
-
         return this.cartCount;
-
-
     }
 
 
     getCartContainorButton(){
-
         return this.cartContainor;
-
     }
 
     //Actions method
 
-    async clicksortButton(){
-        await this.sortButton.click();
-
+    async sortProducts(option:string) {
+    await this.sortButton.selectOption(option);
     }
 
     async clickAddToCartCheapest(){
       await  this.addToCartButtonCheapest.click();
-
     }
 
     async clickAddToCartExpensive(){
         await this.addToCartButtonExpensive.click();
-
     }
 
         async verifyCartCount(expectedCount: string) {
     await expect(this.cartCount).toHaveText(expectedCount);
-    
     }
 
     async clickcartContainor(){
         await this.cartContainor.click();
-
     }
 
 }
