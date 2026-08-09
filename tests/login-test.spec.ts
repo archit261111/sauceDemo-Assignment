@@ -3,8 +3,6 @@ import { Login } from '../pom/pages/login';
 import creds from '../test-data/creds.json';
 
 
-
-
   let loginPage:Login;
 
 
