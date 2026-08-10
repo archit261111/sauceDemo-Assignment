@@ -43,7 +43,7 @@ export class Inventory {
     }
 
     getCartCount(){
-        return this.cartCount;
+        return this.cartCount.textContent();
     }
 
 
@@ -65,9 +65,6 @@ export class Inventory {
         await this.addToCartButtonExpensive.click();
     }
 
-        async verifyCartCount(expectedCount: string) {
-    await expect(this.cartCount).toHaveText(expectedCount);
-    }
 
     async clickcartContainor(){
         await this.cartContainor.click();
