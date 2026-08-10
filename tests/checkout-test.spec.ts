@@ -5,26 +5,35 @@ import { Checkout } from '../pom/pages/checkout';
 import { Helper } from './autoHelper/helper';
 import * as fs from 'node:fs';
 import { PDFParse } from 'pdf-parse';
+import userdata from '../test-data/userdata.json'
+import { Inventory } from '../pom/pages/inventorypage';
 
 
 
 let loginPage:Login;
 let cartPage:Cart;
 let checkoutPage:Checkout;
+let inventoryPage:Inventory;
+let helper:Helper;
 
 
   test.beforeEach('Login and add product to cart', async ({page}) => {
 
     //objects
-    let helper = new Helper(page);
+     helper = new Helper(page);
     loginPage = new Login(page);
     cartPage = new Cart(page);
     checkoutPage = new Checkout(page);
+    inventoryPage = new Inventory(page);
 
     //login to the site
     await helper.login();
 
     //Add product to cart
+
+     helper.addProductToCart();
+
+     //
     
   })
 
@@ -32,6 +41,7 @@ let checkoutPage:Checkout;
 
   test("Verify end-to-end checkout completion", async ({page}) =>{
 
+    
     await test.step("User click on the checkout button on cart page", async ()=>{
 
         await cartPage.clickCheckoutButton();
@@ -41,9 +51,9 @@ let checkoutPage:Checkout;
 
     await test.step("User enter checkout details", async ()=>{
 
-        await checkoutPage.enterFirstname("Archit");
-        await checkoutPage.enterLastname("Aggarwal");
-        await checkoutPage.enterPostalCode("110");
+        await checkoutPage.enterFirstname(userdata.firstname);
+        await checkoutPage.enterLastname(userdata.lastname);
+        await checkoutPage.enterPostalCode(userdata.postalcode);
         await checkoutPage.clickContinueButton();
 
     })
@@ -54,9 +64,9 @@ let checkoutPage:Checkout;
 
     })
 
-    test.step("Validate checkout completed successfully", async ()=>{
+    await test.step("Validate checkout completed successfully", async ()=>{
 
-        await expect(page).toHaveURL("https://www.saucedemo.com/checkout-complete.html");
+        await expect(checkoutPage.getPage()).toHaveURL("https://www.saucedemo.com/checkout-complete.html");
 
     })
 
@@ -66,11 +76,17 @@ let checkoutPage:Checkout;
 
 test("Validate the PDF order summary", async ({ page }) => {
 
-    // Variable used to store the downloaded PDF object.
+
+  // Variable used to store the downloaded PDF object.
     let download: Download;
 
     // Variable used to store the extracted text from the PDF.
     let pdfText: string;
+
+  await test.step('complete the check stesp', async ()=>{
+
+    await helper.completeCheckoutProcess()
+  })
 
     await test.step('Click on generate PDF order button', async () => {
 
@@ -113,22 +129,24 @@ test("Validate the PDF order summary", async ({ page }) => {
 
     });
 
-    await test.step('Verify PDF contains expected order info', async () => {
+    await test.step('Verify PDF contains expected order and user info', async () => {
 
-        // Verify that the PDF contains the order summary.
-        expect(pdfText).toContain('Order Summary');
+      
+      for(let productName of await checkoutPage.getSelectedProductNames()){
 
-        // Verify that the expected product is present.
-        expect(pdfText).toContain('Sauce Labs Backpack');
+         // Verify that the PDF contains products.
+        
+         expect(pdfText).toContain(productName);
 
+      }
         // Verify that the expected customer's first name is present.
-        expect(pdfText).toContain('Archit');
+        expect(pdfText).toContain(userdata.firstname);
 
         // Verify that the expected customer's last name is present.
-        expect(pdfText).toContain('Aggarwal');
+        expect(pdfText).toContain(userdata.lastname);
 
         // Verify that the postal code is present.
-        expect(pdfText).toContain('110');
+        expect(pdfText).toContain(userdata.postalcode);
 
     });
 
