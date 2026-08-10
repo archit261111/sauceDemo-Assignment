@@ -114,9 +114,9 @@ export class checkOut{
 
        await this.generatePdfOrderButton.click();
 
-    async enterFirstname(firstname:string){
+    async enterFirstname(this.firstNameField:string){
 
-       await this.firstNameField.fill(firstname);
+       await this.firstNameField.fill(firstNameField);
 
     }
 
