@@ -6,26 +6,34 @@ import { Helper } from './autoHelper/helper';
 import * as fs from 'node:fs';
 import { PDFParse } from 'pdf-parse';
 import userdata from '../test-data/userdata.json'
+import { Inventory } from '../pom/pages/inventorypage';
 
 
 
 let loginPage:Login;
 let cartPage:Cart;
 let checkoutPage:Checkout;
+let inventoryPage:Inventory;
+let helper:Helper;
 
 
   test.beforeEach('Login and add product to cart', async ({page}) => {
 
     //objects
-    let helper = new Helper(page);
+     helper = new Helper(page);
     loginPage = new Login(page);
     cartPage = new Cart(page);
     checkoutPage = new Checkout(page);
+    inventoryPage = new Inventory(page);
 
     //login to the site
     await helper.login();
 
     //Add product to cart
+
+     helper.addProductToCart();
+
+     //
     
   })
 
@@ -33,6 +41,7 @@ let checkoutPage:Checkout;
 
   test("Verify end-to-end checkout completion", async ({page}) =>{
 
+    
     await test.step("User click on the checkout button on cart page", async ()=>{
 
         await cartPage.clickCheckoutButton();
@@ -55,9 +64,9 @@ let checkoutPage:Checkout;
 
     })
 
-    test.step("Validate checkout completed successfully", async ()=>{
+    await test.step("Validate checkout completed successfully", async ()=>{
 
-        await expect(page).toHaveURL("https://www.saucedemo.com/checkout-complete.html");
+        await expect(checkoutPage.getPage()).toHaveURL("https://www.saucedemo.com/checkout-complete.html");
 
     })
 
@@ -67,11 +76,17 @@ let checkoutPage:Checkout;
 
 test("Validate the PDF order summary", async ({ page }) => {
 
-    // Variable used to store the downloaded PDF object.
+
+  // Variable used to store the downloaded PDF object.
     let download: Download;
 
     // Variable used to store the extracted text from the PDF.
     let pdfText: string;
+
+  await test.step('complete the check stesp', async ()=>{
+
+    await helper.completeCheckoutProcess()
+  })
 
     await test.step('Click on generate PDF order button', async () => {
 
@@ -114,8 +129,9 @@ test("Validate the PDF order summary", async ({ page }) => {
 
     });
 
-    await test.step('Verify PDF contains expected order info', async () => {
+    await test.step('Verify PDF contains expected order and user info', async () => {
 
+      
       for(let productName of await checkoutPage.getSelectedProductNames()){
 
          // Verify that the PDF contains products.

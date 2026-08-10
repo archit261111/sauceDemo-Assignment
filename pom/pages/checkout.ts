@@ -12,10 +12,13 @@ export class Checkout{
     finishButton:Locator;
     generatePdfOrderButton:Locator;
     selectedProductNames;
+    page:Page;
 
 
     //Constructor
     constructor(page:Page){
+
+        this.page = page;
 
         //checkout step one page locators
         this.firstNameField = page.locator("#first-name");
@@ -27,7 +30,7 @@ export class Checkout{
         //Checkout step two page locators
         this.checkoutOverviewHeaderText = page.getByText("Checkout: Overview");
         this.finishButton = page.locator("#finish");
-        this.selectedProductNames = page.locator('.inventory_item_name').allTextContents();
+        this.selectedProductNames = page.locator('.inventory_item_name');
 
 
         //checkout completion page locator
@@ -42,6 +45,10 @@ export class Checkout{
 
     //Behavior
     //getter methods
+
+    getPage(){
+        return this.page;
+    }
 
     getfirstName (){
 
@@ -75,7 +82,7 @@ export class Checkout{
 
     getSelectedProductNames(){
 
-        return this.selectedProductNames;
+        return this.selectedProductNames.allTextContents();
     }
 
     //Actions method- checkout step one page
@@ -108,7 +115,7 @@ export class Checkout{
 
     async clickFinishButton(){
 
-       await this.continueButton.click();
+       await this.finishButton.click();
 
     }
 
