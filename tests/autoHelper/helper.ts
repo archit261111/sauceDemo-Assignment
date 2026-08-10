@@ -2,7 +2,7 @@ import { Page, test, expect } from '@playwright/test'
 import { Login } from '../../pom/pages/login';
 
 export class Helper {
-    private page: Page;
+    
     private loginPage: Login;
 
     constructor(page: Page) {
