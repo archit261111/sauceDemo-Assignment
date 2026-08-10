@@ -2,6 +2,7 @@ import {test, Page, Locator} from "@playwright/test"
 
 export class Checkout{
 
+
     //Properties
     firstNameField:Locator;
     lastNameField:Locator;
@@ -67,6 +68,7 @@ export class Checkout{
 
     getcheckoutOverviewHeaderText(){
 
+
         return this.checkoutOverviewHeaderText;
 
     }
@@ -117,6 +119,6 @@ export class Checkout{
     }
 
 
+}
 
     
-}

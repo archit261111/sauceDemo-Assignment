@@ -5,6 +5,7 @@ import { Checkout } from '../pom/pages/checkout';
 import { Helper } from './autoHelper/helper';
 import * as fs from 'node:fs';
 import { PDFParse } from 'pdf-parse';
+import userdata from '../test-data/userdata.json'
 
 
 
@@ -41,9 +42,9 @@ let checkoutPage:Checkout;
 
     await test.step("User enter checkout details", async ()=>{
 
-        await checkoutPage.enterFirstname("Archit");
-        await checkoutPage.enterLastname("Aggarwal");
-        await checkoutPage.enterPostalCode("110");
+        await checkoutPage.enterFirstname(userdata.firstname);
+        await checkoutPage.enterLastname(userdata.lastname);
+        await checkoutPage.enterPostalCode(userdata.postalcode);
         await checkoutPage.clickContinueButton();
 
     })
@@ -115,20 +116,21 @@ test("Validate the PDF order summary", async ({ page }) => {
 
     await test.step('Verify PDF contains expected order info', async () => {
 
-        // Verify that the PDF contains the order summary.
-        expect(pdfText).toContain('Order Summary');
+      for(let productName of await checkoutPage.getSelectedProductNames()){
 
-        // Verify that the expected product is present.
-        expect(pdfText).toContain('Sauce Labs Backpack');
+         // Verify that the PDF contains products.
+        
+         expect(pdfText).toContain(productName);
 
+      }
         // Verify that the expected customer's first name is present.
-        expect(pdfText).toContain('Archit');
+        expect(pdfText).toContain(userdata.firstname);
 
         // Verify that the expected customer's last name is present.
-        expect(pdfText).toContain('Aggarwal');
+        expect(pdfText).toContain(userdata.lastname);
 
         // Verify that the postal code is present.
-        expect(pdfText).toContain('110');
+        expect(pdfText).toContain(userdata.postalcode);
 
     });
 

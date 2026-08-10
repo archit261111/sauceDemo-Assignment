@@ -4,7 +4,7 @@ import { Login } from '../../pom/pages/login';
 export class Helper {
     
     private loginPage: Login;
-    private page:Page
+    page:Page;
 
     constructor(page: Page) {
         this.page = page;
@@ -18,6 +18,7 @@ export class Helper {
      await this.page.goto("https://www.saucedemo.com/");
         await this.loginPage.enterUserName("standard_user");
          await this.loginPage.enterPassword("secret_sauce");
+         await this.loginPage.clickLoginButton();
 
     }
 
