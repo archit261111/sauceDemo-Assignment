@@ -1,11 +1,6 @@
 import {test, Page, Locator} from "@playwright/test"
 
-<<<<<<< Updated upstream
-export class Cart{
-=======
 export class cart{
->>>>>>> Stashed changes
-
 
     //Properties
 
