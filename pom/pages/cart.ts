@@ -1,7 +1,6 @@
 import {test, Page, Locator} from "@playwright/test"
 
-export class Cart{
-
+export class cart{
 
     //Properties
 

@@ -1,6 +1,6 @@
 import {test, Page, Locator} from "@playwright/test"
 
-export class Checkout{
+export class checkOut{
 
     //Properties
     firstNameField:Locator;
@@ -114,9 +114,24 @@ export class Checkout{
 
        await this.generatePdfOrderButton.click();
 
+    async enterFirstname(firstname:string){
+
+       await this.firstNameField.fill(firstname);
+
     }
 
+    async enterLastname(lastname: string){
 
+       await this.lastNameField.fill(lastname);
+
+    }
+
+    async enterPostalCode(postalcode:string){
+
+       await this.postalCodeField.fill(postalcode);
+
+    }
+    
 
     
 }
