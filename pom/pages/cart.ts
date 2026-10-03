@@ -2,7 +2,6 @@ import {test, Page, Locator} from "@playwright/test"
 
 export class Cart{
 
-
     //Properties
 
     checkoutButton:Locator;
